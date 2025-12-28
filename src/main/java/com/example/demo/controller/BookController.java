@@ -1,29 +1,27 @@
 package com.example.demo.controller;
-import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Book;
-import com.example.demo.repository.BookRepository;
-
+import com.example.demo.service.BookService;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("/api/books")
 public class BookController {
-    private final BookRepository repository;
 
+    private final BookService service;
 
-    public BookController(BookRepository repository) {
-        this.repository = repository;
+    public BookController(BookService service) {
+        this.service = service;
     }
 
-
     @GetMapping
-    public List<Book> getAllBooks() {
-        return repository.findAll();
+    public List<Book> getBooks() {
+        return service.getAllBooks();
     }
 
     @PostMapping
-    public Book addBook(@RequestBody Book book) {
-        return repository.save(book);
+    public Book createBook(@RequestBody Book book) {
+        return service.saveBook(book);
     }
 }
